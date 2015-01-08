@@ -32,7 +32,7 @@
 *~
 
 # Ignored directories
-i686-w64-mingw32/
+build
 zlib-1.2.8.tar.gz
 zlib-1.2.8/
 
