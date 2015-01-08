@@ -10,13 +10,14 @@ ZLIB_VERSION=1.2.8
 ZLIB_PREFIX=zlib-${ZLIB_VERSION}
 
 # Target directories
-TARGET_NAME=libz-mingw-w64-i686
-TARGET_DIR=build/${TARGET_NAME}-${ZLIB_VERSION}
-TARGET_INCLUDE_DIR=../${TARGET_DIR}/usr/include/c++/4.8/${GCC_PREFIX}
+TARGET_NAME=libz-mingw-w64-x86-64-${ZLIB_VERSION}
+TARGET_DIR=build/${TARGET_NAME}
+TARGET_FILE=${TARGET_DIR}.deb
 TARGET_LIB_DIR=../${TARGET_DIR}/usr/lib/gcc/${GCC_PREFIX}/4.8
+TARGET_INCLUDE_DIR=${TARGET_LIB_DIR}/include
 TARGET_DEB_DIR=$(TARGET_DIR)/DEBIAN
 
-all: zlib-dev-mingw-w64-i686.deb
+all: ${TARGET_FILE}
 
 ${ZLIB_PREFIX}.tar.gz:
 	wget http://zlib.net/${ZLIB_PREFIX}.tar.gz
@@ -35,7 +36,7 @@ run-make: run-configure
 run-install: run-make
 	make -C ${ZLIB_PREFIX} -f Makefile install
 
-zlib-dev-mingw-w64-i686.deb: run-install
+${TARGET_FILE}: run-install
 	-mkdir ${TARGET_DEB_DIR}
 	cp control-${GCC_PREFIX} ${TARGET_DEB_DIR}/control
 	dpkg-deb --build ${TARGET_DIR}
