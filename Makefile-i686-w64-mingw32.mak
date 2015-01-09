@@ -28,7 +28,7 @@ ${SRC_PREFIX}: ${SRC_PACK}
 	unzip ${SRC_PACK}
 
 run-configure: ${SRC_PREFIX}
-	cd ${SRC_PREFIX} ; CC=${CC} AR=${AR} RANLIB=${RANLIB} CXX=${CXX} ./configure --prefix=/tmp --includedir=${TARGET_INCLUDE_DIR} --libdir=${TARGET_LIB_DIR}
+	cd ${SRC_PREFIX} ; CPP=${CPP} CC=${CC} AR=${AR} RANLIB=${RANLIB} CXX=${CXX} ./configure --enable-static --disable-shared --without-pthreads --host=mingw32
 
 run-make: run-configure
 	make -C ${SRC_PREFIX} -f Makefile clean
