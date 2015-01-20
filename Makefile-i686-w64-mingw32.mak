@@ -27,22 +27,24 @@ ${SRC_PREFIX}: ${SRC_PACK}
 	md5sum -c ${SRC_PACK}.md5
 	unzip ${SRC_PACK}
 
-run-configure: ${SRC_PREFIX}
-	cd ${SRC_PREFIX} ; CPP=${CPP} CC=${CC} AR=${AR} RANLIB=${RANLIB} CXX=${CXX} ./configure --enable-static --disable-shared --without-pthreads --host=mingw32
+gtest-all.o: ${SRC_PREFIX}
+	${CXX} -isystem ${SRC_PREFIX}/include -I${SRC_PREFIX} -pthread -c ${SRC_PREFIX}/src/gtest-all.cc
+	
+libgtest.a: gtest-all.o
+	${AR} -rv libgtest.a gtest-all.o
 
-run-make: run-configure
-	make -C ${SRC_PREFIX} -f Makefile clean
-	make -C ${SRC_PREFIX} -f Makefile
-
-run-install: run-make
-	make -C ${SRC_PREFIX} -f Makefile install
-
-${TARGET_FILE}: run-install
+${TARGET_FILE}: libgtest.a
 	-mkdir ${TARGET_DEB_DIR}
+	-mkdir -p ${TARGET_DEB_DIR}/usr/lib/gcc/${GCC_PREFIX}/4.8
+	-mkdir -p ${TARGET_DEB_DIR}/usr/lib/gcc/${GCC_PREFIX}/4.8/include
+	cp libgtest.a ${TARGET_DEB_DIR}/usr/lib/gcc/${GCC_PREFIX}/4.8
+	cp -r ${SRC_PREFIX}/include/gtest ${TARGET_DEB_DIR}/usr/lib/gcc/${GCC_PREFIX}/4.8/include/gtest
 	cp control-${GCC_PREFIX} ${TARGET_DEB_DIR}/control
 	dpkg-deb --build ${TARGET_DIR}
 
 clean:
+	-rm -Rf *.o
+	-rm -Rf *.a
 	-rm -Rf ${SRC_PREFIX}
 	-rm -Rf ${TARGET_DIR}
 
