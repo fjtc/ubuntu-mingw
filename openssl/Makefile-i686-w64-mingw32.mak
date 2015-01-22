@@ -12,13 +12,13 @@ SRC_PREFIX=openssl-${SRC_VERSION}
 SRC_PACK=openssl-1.0.1l.tar.gz
 
 # Target directories
-TARGET_NAME=gtest-mingw-w64-i686-${SRC_VERSION}
+TARGET_NAME=openssl-mingw-w64-i686-${SRC_VERSION}
 TARGET_DIR=build/${TARGET_NAME}
 TARGET_FILE=${TARGET_DIR}.deb
 TARGET_LIB_DIR=${TARGET_DIR}/usr/lib/gcc/${GCC_PREFIX}/4.8
 TARGET_INCLUDE_DIR=${TARGET_LIB_DIR}/include
 TARGET_DEB_DIR=$(TARGET_DIR)/DEBIAN
-TMP_DIR=${TARGET_DIR}.tmp
+TMP_DIR=${PWD}/build/${GCC_PREFIX}.tmp
 
 all: ${TARGET_FILE}
 
@@ -30,27 +30,22 @@ ${SRC_PREFIX}: ${SRC_PACK}
 	tar -xzf ${SRC_PACK}
 
 configure: ${SRC_PREFIX}
-	cd ${SRC_PREFIX}; ./Configure --cross-compile-prefix=${GCC_PREFIX}- --prefix=??  zlib no-shared mingw
+	cd ${SRC_PREFIX}; ./Configure --cross-compile-prefix=${GCC_PREFIX}- --prefix=${TMP_DIR} zlib no-shared mingw
 
-${TMP_DIR}:
-	-mkdir -p ${TMP_DIR}
+compile: configure
+	make -C ${SRC_PREFIX} install
 
-${TMP_DIR}/gtest-all.o: ${SRC_PREFIX} ${TMP_DIR}
-	${CXX} ${CFLAGS} -isystem ${SRC_PREFIX}/include -I${SRC_PREFIX} -pthread -c ${SRC_PREFIX}/src/gtest-all.cc -o $@
-	
-libgtest.a: ${TMP_DIR}/gtest-all.o
-	${AR} -rv ${TMP_DIR}/libgtest.a ${TMP_DIR}/gtest-all.o
-
-${TARGET_FILE}: libgtest.a
+${TARGET_FILE}: compile
 	-mkdir -p ${TARGET_DEB_DIR}
 	-mkdir -p ${TARGET_LIB_DIR}
 	-mkdir -p ${TARGET_INCLUDE_DIR}
-	cp ${TMP_DIR}/libgtest.a ${TARGET_LIB_DIR}
-	cp -r ${SRC_PREFIX}/include/gtest ${TARGET_INCLUDE_DIR}
+	cp ${TMP_DIR}/lib/*.a ${TARGET_LIB_DIR}
+	cp -R ${TMP_DIR}/include/openssl ${TARGET_INCLUDE_DIR}/openssl
 	cp control-${GCC_PREFIX} ${TARGET_DEB_DIR}/control
 	dpkg-deb --build ${TARGET_DIR}
 
 clean:
+	make -C ${SRC_PREFIX} clean
 	-rm -Rf ${TMP_DIR}
 	-rm -Rf ${TARGET_DIR}
 
