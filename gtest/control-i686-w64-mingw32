@@ -1,4 +1,4 @@
-Package: gtest-mingw-w64-i686
+Package: gtest-mingw-w64-i686-dev
 Version: 1.7.0
 Section: Development (universe)
 Priority: extra

@@ -12,7 +12,7 @@ SRC_PREFIX=gtest-${SRC_VERSION}
 SRC_PACK=gtest-1.7.0.zip
 
 # Target directories
-TARGET_NAME=gtest-mingw-w64-x86_64-${SRC_VERSION}
+TARGET_NAME=gtest-mingw-w64-x86_64-${SRC_VERSION}-dev
 TARGET_DIR=build/${TARGET_NAME}
 TARGET_FILE=${TARGET_DIR}.deb
 TARGET_LIB_DIR=${TARGET_DIR}/usr/lib/gcc/${GCC_PREFIX}/4.8
