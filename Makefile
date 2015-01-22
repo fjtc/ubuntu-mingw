@@ -24,20 +24,23 @@
 # For more information, please refer to <http://unlicense.org>
 DST_DIR=packages
 
-all: install
+help: 
+	echo Run 'make stage-1' to compile all basic libraries
+	echo Run 'make stage-2' to compile all libraries that depends on stage-1 libraries
 
-compile:
-	make -C zlib
-	make -C gtest
-	make -C openssl
-	
-${DST_DIR}:
-	-mkdir ${DST_DIR}
-	
-install: ${DST_DIR} compile
-	cp zlib/build/*.deb ${DST_DIR}
-	cp gtest/build/*.deb ${DST_DIR}
-	cp openssl/build/*.deb ${DST_DIR}
+stage-1: make.zlib make.gtest
+	echo Install all stage-1 packages before start stage-2
+
+stage-2: make.openssl
+
+make.zlib:
+	make -f Makefile-base LIB_NAME=zlib
+
+make.gtest:
+	make -f Makefile-base LIB_NAME=gtest
+
+make.openssl:
+	make -f Makefile-base LIB_NAME=openssl
 
 clean:
 	make -C zlib clean

@@ -1,0 +1,11 @@
+
+# DST_DIR and LIB_NAME must be defined.
+
+${DST_DIR}:
+	-mkdir ${DST_DIR}
+
+${LIB_NAME}.compile:
+	make -C ${LIB_NAME}
+
+${LIB_NAME}.install: ${DST_DIR}
+	cp ${libname}/build/*.deb ${DST_DIR}
