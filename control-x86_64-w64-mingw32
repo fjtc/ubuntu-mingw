@@ -1,4 +1,4 @@
-Package: libz-mingw-w64-x86-64
+Package: libz-mingw-w64-x86-64-dev
 Version: 1.2.8
 Section: Development (universe)
 Priority: extra

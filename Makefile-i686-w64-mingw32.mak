@@ -1,4 +1,3 @@
-
 GCC_PREFIX=i686-w64-mingw32
 CC=$(GCC_PREFIX)-gcc
 CXX=$(GCC_PREFIX)-g++
@@ -10,7 +9,7 @@ ZLIB_VERSION=1.2.8
 ZLIB_PREFIX=zlib-${ZLIB_VERSION}
 
 # Target directories
-TARGET_NAME=libz-mingw-w64-i686-${ZLIB_VERSION}
+TARGET_NAME=libz-mingw-w64-i686-${ZLIB_VERSION}-dev
 TARGET_DIR=build/${TARGET_NAME}
 TARGET_FILE=${TARGET_DIR}.deb
 TARGET_LIB_DIR=../${TARGET_DIR}/usr/lib/gcc/${GCC_PREFIX}/4.8
