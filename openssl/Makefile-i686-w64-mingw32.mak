@@ -30,6 +30,7 @@ ${SRC_PREFIX}: ${SRC_PACK}
 	tar -xzf ${SRC_PACK}
 
 configure: ${SRC_PREFIX}
+	-make -C ${SRC_PREFIX} clean
 	cd ${SRC_PREFIX}; ./Configure --cross-compile-prefix=${GCC_PREFIX}- --prefix=${TMP_DIR} zlib no-shared mingw
 
 compile: configure
