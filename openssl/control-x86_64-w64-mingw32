@@ -1,0 +1,9 @@
+Package: openssl-mingw-w64-x86-64-dev
+Version: 1.7.0
+Section: Development (universe)
+Priority: extra
+Architecture: all
+Depends: gcc-mingw-w64-x86-64 (>= 4.8.2-10ubuntu2+12), libz-mingw-w64-i686-dev (>= 1.7.0)
+Maintainer: Fabio Jun Takada Chino <fjtc@users.noreply.github.com>
+Description: OpenSSL development files to be used with gcc-mingw-w64-x86-64 cross-compiler.
+
