@@ -34,13 +34,13 @@ stage-1: make.zlib make.gtest
 stage-2: make.openssl
 
 make.zlib:
-	make -f Makefile-base LIB_NAME=zlib
+	make -f Makefile-base LIB_NAME=zlib DST_DIR=${DST_DIR} install
 
 make.gtest:
-	make -f Makefile-base LIB_NAME=gtest
+	make -f Makefile-base LIB_NAME=gtest DST_DIR=${DST_DIR} install
 
 make.openssl:
-	make -f Makefile-base LIB_NAME=openssl
+	make -f Makefile-base LIB_NAME=openssl DST_DIR=${DST_DIR} install
 
 clean:
 	make -C zlib clean

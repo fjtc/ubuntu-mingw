@@ -7,5 +7,5 @@ ${DST_DIR}:
 ${LIB_NAME}.compile:
 	make -C ${LIB_NAME}
 
-${LIB_NAME}.install: ${DST_DIR}
-	cp ${libname}/build/*.deb ${DST_DIR}
+install: ${DST_DIR} ${LIB_NAME}.compile
+	cp ${LIB_NAME}/build/*.deb ${DST_DIR}
