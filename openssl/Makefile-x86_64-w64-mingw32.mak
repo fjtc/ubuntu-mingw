@@ -17,7 +17,7 @@ TARGET_FILE=${TARGET_DIR}.deb
 TARGET_LIB_DIR=${TARGET_DIR}/usr/lib/gcc/${GCC_PREFIX}/4.8
 TARGET_INCLUDE_DIR=${TARGET_LIB_DIR}/include
 TARGET_DEB_DIR=$(TARGET_DIR)/DEBIAN
-TMP_DIR=${PWD}/build/${GCC_PREFIX}.tmp
+TMP_DIR=$(shell pwd)/build/${GCC_PREFIX}.tmp
 
 all: ${TARGET_FILE}
 
@@ -29,8 +29,8 @@ ${SRC_PREFIX}: ${SRC_PACK}
 	tar -xzf ${SRC_PACK}
 
 configure: ${SRC_PREFIX}
-	-make -C ${SRC_PREFIX} clean
 	cd ${SRC_PREFIX}; ./Configure --cross-compile-prefix=${GCC_PREFIX}- --prefix=${TMP_DIR} zlib no-shared mingw64 no-asm
+	-make -C ${SRC_PREFIX} clean
 
 compile: configure
 	make -C ${SRC_PREFIX} install
