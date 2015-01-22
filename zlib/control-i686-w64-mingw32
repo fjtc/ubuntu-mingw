@@ -1,0 +1,9 @@
+Package: libz-mingw-w64-i686-dev
+Version: 1.2.8
+Section: Development (universe)
+Priority: extra
+Architecture: all
+Depends: gcc-mingw-w64-i686 (>= 4.8.2-10ubuntu2+12)
+Maintainer: Fabio Jun Takada Chino <fjtc@users.noreply.github.com>
+Description: zlib development files to be used with gcc-mingw-w64-i686 cross-compiler.
+
