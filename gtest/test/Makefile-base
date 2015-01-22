@@ -1,0 +1,10 @@
+
+# GCC_PREFIX=i686-w64-mingw32
+CC=${GCC_PREFIX}-gcc
+CFLAGS=-static-libgcc -static-libstdc++ -pthread -s -Os
+
+test-${GCC_PREFIX}.exe: test.cpp
+	${CC} ${CFLAGS} -o $@ $< -lgtest -lstdc++
+
+
+
